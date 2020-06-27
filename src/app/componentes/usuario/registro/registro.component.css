@@ -1,0 +1,19 @@
+.form-control.login-user {
+    border: 0px solid #fff !important;
+  }
+
+.form-control-feedback.is-invalid {
+    color: #dc3545 !important;
+}    
+
+.invalid-feedback {
+    display:inherit;
+}
+
+.alerta-input input {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback.is-invalid{
+  text-align: left !important;
+}

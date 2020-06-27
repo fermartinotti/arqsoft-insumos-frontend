@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - "10.14"
+
+dist: trusty
+
+sudo: required
+
+branches:
+  only:
+  - master
+  - develop
+
+before_script:
+- npm install -g @angular/cli
+- npm install
+
+script:
+- npm run lint

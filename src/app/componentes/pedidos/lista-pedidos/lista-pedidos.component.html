@@ -1,0 +1,34 @@
+<div class="card mt-5">
+  <div class="card-body">
+    <h6 class="text-center">
+      Pedidos realizados
+    </h6>
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Área destinada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos | paginate: {itemsPerPage:4, currentPage: paginaActual}">
+          <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
+          <td>{{pedido.estados[0].type}}</td>
+          <td>{{pedido.area.nombre}}</td>
+          <td>
+            <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+            </div>
+          </td>
+          <td *ngIf="pedido.estados[0].type != 'Cancelado'">
+            <div (click)="cancelarPedido(pedido.id)" title="Cancelar pedido">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+  </div>
+</div>
