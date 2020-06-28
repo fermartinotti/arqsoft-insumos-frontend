@@ -1,14 +1,15 @@
-export class Estado{
+export class Estado {
     type:string; 
     fecha:string;
+    motivo:string;
     
-    constructor(type: string, fecha: string){
+    constructor(type: string, fecha: string, motivo?:string){
         this.type = type;
         this.fecha = fecha;
+        this.motivo = motivo;
     }
 
-    static crearDesdeJson(json: any): Estado{
-        const estado = new Estado(json.type, json.fecha);
-        return estado;
-      }
+    static crearDesdeJson(json: any): Estado {
+        return new Estado(json.type, json.fecha, json.motivo);
+    }
 }

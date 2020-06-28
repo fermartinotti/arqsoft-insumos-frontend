@@ -1,1 +1,58 @@
-<p>admin-pedidos works!</p>
+<div class="d-flex">
+  <div class="sidebar-container bg-sidebar col-2">
+    <div class="menu mt-5">
+      <a href="#" class="d-block p-2 mt-1"><span class="material-icons">
+          speed
+        </span>Dashboard</a>
+      <hr>
+      <a href="#" class="d-block p-2 mt-1 hover">
+        <span class="material-icons">
+          business
+        </span>Comercios</a>
+      <hr>
+      <a href="#" class="d-block p-2 mt-1"><span class="material-icons">
+          event_note
+        </span>Vencimientos</a>
+      <hr>
+      <a href="#" class="d-block p-2 mt-1"><span class="material-icons">
+          monetization_on
+        </span>Ventas</a>
+
+      <a href="#" class="btn btn-sm btn-primario d-block mt-5 m-4"><span class="material-icons icon-edit-menu">
+          edit
+        </span>Edición Masiva</a>
+    </div>
+  </div>
+
+
+<div class="card mt-5">
+    <div class="card-body">
+      <h6 class="text-center">
+        Pedidos realizados
+      </h6>
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Área destinada</th>
+            <th scope="col">Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidos">
+            <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
+            <td>{{pedido.estados[0].type}}</td>
+            <td>{{pedido.area.nombre}}</td>
+            <td>{{pedido.email}}</td>
+            <td *ngIf="pedido.estados[0].type != 'Cancelado'">
+              <div (click)="rechazarPedido(pedido.id)" title="Cancelar pedido">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+  </div>

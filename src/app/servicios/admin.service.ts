@@ -12,10 +12,10 @@ export class AdminService {
 
     constructor(private httpClient: HttpClient) {}
 
-    async getAllPedidos(){
-        return await this.httpClient.get<Array<Pedido>>(baseURL + 'insumos/ticket/todos', {
+    async getAllPedidos(): Promise<Array<Pedido>> {
+        return await this.httpClient.get<Array<Pedido>>(baseURL + '/insumos/ticket/todos', {
             headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`)
-          }).pipe(map(respuesta => respuesta.map(pedido => Pedido.crearDesdeJson(pedido)))).toPromise()          
+          }).pipe(map(respuesta => respuesta.map(pedido => Pedido.crearDesdeJson(pedido)))).toPromise();  
     }
 
     async rechazarPedido(ticket:RechazarTicketRequest): Promise<any> {
@@ -25,7 +25,7 @@ export class AdminService {
     }
 
     async getAllProveedores(){
-        return await this.httpClient.get<Array<Pedido>>(baseURL + 'insumos/proveedores', {
+        return await this.httpClient.get<Array<Pedido>>(baseURL + '/insumos/proveedores', {
             headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`)
           }).pipe(map(respuesta => respuesta.map(proveedor => Proveedor.crearDesdeJson(proveedor)))).toPromise()          
     }
