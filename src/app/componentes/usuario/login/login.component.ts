@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         await this.usuarioService.login(loginRequest).then(resultado => this.setearRoles(resultado));
 
         if(this.usuarioService.esAdminLogueado()){
-          this.router.navigate(['/inicio']);
+          this.router.navigate(['/adminPedidos']);
         }
         else{
           this.router.navigate(['/pedido']);

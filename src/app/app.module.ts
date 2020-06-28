@@ -33,6 +33,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ModalListComponent } from './componentes/modals/modal-list/modal-list.component';
 
 import { UsuarioService } from './servicios/usuario.service';
+import { AdminService } from './servicios/admin.service';
+import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-pedidos.component';
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { UsuarioService } from './servicios/usuario.service';
     ListaPedidosComponent,
     PedidosComponent,
     ModalConfirmacionComponent,
-    ModalListComponent
+    ModalListComponent,
+    AdminPedidosComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,7 @@ import { UsuarioService } from './servicios/usuario.service';
   exports: [
     HttpClientModule
   ],
-  providers: [UsuarioService, AuthGuard, RoleGuard],
+  providers: [UsuarioService, AdminService, AuthGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

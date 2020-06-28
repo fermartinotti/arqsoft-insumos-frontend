@@ -8,6 +8,7 @@ import { RoleGuard } from './auth/role.guard';
 import {RegistroComponent} from './componentes/usuario/registro/registro.component';
 import {LoginComponent} from './componentes/usuario/login/login.component';
 import { PedidosComponent } from './componentes/pedidos/pedidos.component';
+import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-pedidos.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'registro', component:RegistroComponent},
   {path: 'login', component:LoginComponent},
   {path: 'pedido', component:PedidosComponent, canActivate: [AuthGuard]},
+  {path:'adminPedidos', component:AdminPedidosComponent, canActivate: [RoleGuard]},
   {path: '**', redirectTo: 'inicio'}
 ];
 
