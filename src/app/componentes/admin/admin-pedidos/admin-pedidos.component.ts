@@ -17,12 +17,12 @@ export class AdminPedidosComponent implements OnInit {
   solapaPendientes: boolean = false;
   solapaRechazados: boolean = false;
   paginaActual:number = 1; 
+  solapaActual: string = 'Todos los pedidos'
 
   constructor(private adminService: AdminService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.adminService.getAllPedidos().then(pedidos => this.setearPedidos(pedidos));
-    this.getAllPedidos;
+    this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
   }
 
   setearPedidos(pedidos) {
@@ -33,40 +33,36 @@ export class AdminPedidosComponent implements OnInit {
   setearProveedores(proveedores) {
     this.proveedores = proveedores;
   }
-/*
-  async rechazarPedido(id: number): Promise<any> {
-    try {
-      const ticket: RechazarTicketRequest = new RechazarTicketRequest(id, 'porque si');
-      await this.adminService.rechazarPedido(ticket);
-      this.adminService.getAllPedidos().then(pedidos => this.setearPedidos(pedidos));
-      this.crearModal('Rechazar pedido', 'El pedido se ha rechazado satistfactoriamente');
-    }
-    catch (error) {
-      console.log(error);
-      this.crearModal('Rechazo de pedido', 'No se pudo rechazar el pedido. Intente nuevamente mas tarde');
-    }
-  }*/
 
   rechazarPedido(id: number) {
     const modalRechazo= this.modalService.open(ModalRechazoComponent);
     modalRechazo.componentInstance.idTicket = id;
+    modalRechazo.result.then(result=>{
+    this.getPedidosRechazados();
+    })
   }
 
   getPedidosRechazados(){
     this.adminService.getPedidosRechazados().then(result => this.setearPedidos(result));
     this.solapaAll = false;
     this.solapaRechazados = true;
+    this.solapaPendientes = false;
+    this.solapaActual = 'Pedidos rechazados';
   }
 
   getPedidosPendientes(){
     this.adminService.getPedidosPendientes().then(result => this.setearPedidos(result));
     this.solapaAll = false;
     this.solapaRechazados = false;
+    this.solapaPendientes = true;
+    this.solapaActual = 'Pedidos pendientes';
   }
 
   getAllPedidos(){
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
     this.solapaAll = true;
     this.solapaRechazados = false;
+    this.solapaPendientes = false;
+    this.solapaActual = 'Todos los pedidos'
   }
 }
