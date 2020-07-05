@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { ModalCloseComponent } from '../../modals/modal-close/modal-close.layout';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'src/app/servicios/admin.service';
 import { Pedido } from 'src/app/modelo/pedido';
 import { Proveedor } from 'src/app/modelo/proveedor';
-import { RechazarTicketRequest } from 'src/app/modelo/rechazarTicketRequest';
+import { ModalRechazoComponent } from '../../modals/modal-rechazo/modal-rechazo.component';
 
 @Component({
   selector: 'app-admin-pedidos',
@@ -14,12 +13,16 @@ import { RechazarTicketRequest } from 'src/app/modelo/rechazarTicketRequest';
 export class AdminPedidosComponent implements OnInit {
   pedidos: Pedido[];
   proveedores: Proveedor[];
+  solapaAll: boolean = true;
+  solapaPendientes: boolean = false;
+  solapaRechazados: boolean = false;
+  paginaActual:number = 1; 
 
   constructor(private adminService: AdminService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.adminService.getAllPedidos().then(pedidos => this.setearPedidos(pedidos));
-    this.adminService.getAllProveedores().then(proveedores => this.setearProveedores(proveedores));
+    this.getAllPedidos;
   }
 
   setearPedidos(pedidos) {
@@ -29,9 +32,8 @@ export class AdminPedidosComponent implements OnInit {
 
   setearProveedores(proveedores) {
     this.proveedores = proveedores;
-    console.log(proveedores);
   }
-
+/*
   async rechazarPedido(id: number): Promise<any> {
     try {
       const ticket: RechazarTicketRequest = new RechazarTicketRequest(id, 'porque si');
@@ -43,12 +45,28 @@ export class AdminPedidosComponent implements OnInit {
       console.log(error);
       this.crearModal('Rechazo de pedido', 'No se pudo rechazar el pedido. Intente nuevamente mas tarde');
     }
+  }*/
+
+  rechazarPedido(id: number) {
+    const modalRechazo= this.modalService.open(ModalRechazoComponent);
+    modalRechazo.componentInstance.idTicket = id;
   }
 
-  crearModal(titulo: string, descripcion: string) {
-    const modalInform = this.modalService.open(ModalCloseComponent);
-    modalInform.componentInstance.title = titulo;
-    modalInform.componentInstance.description = descripcion;
+  getPedidosRechazados(){
+    this.adminService.getPedidosRechazados().then(result => this.setearPedidos(result));
+    this.solapaAll = false;
+    this.solapaRechazados = true;
   }
 
+  getPedidosPendientes(){
+    this.adminService.getPedidosPendientes().then(result => this.setearPedidos(result));
+    this.solapaAll = false;
+    this.solapaRechazados = false;
+  }
+
+  getAllPedidos(){
+    this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.solapaAll = true;
+    this.solapaRechazados = false;
+  }
 }

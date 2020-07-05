@@ -1,0 +1,19 @@
+.sidebar-pedidos{
+    color: #006ED2;
+}
+
+.sidebar-pedidos:hover{
+   cursor:pointer;
+   color: white;
+   background: #006ED2;
+}
+
+.sidebar-pedidos::selection{
+    cursor:pointer;
+    color: white;
+    background: #006ED2;
+ }
+
+ .paginacion-pedidos-admin{
+     text-align: center;
+ }

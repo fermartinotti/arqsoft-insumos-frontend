@@ -22,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* Modals */
 import { ModalCloseComponent } from './componentes/modals/modal-close/modal-close.layout';
+import { ModalRechazoComponent } from './componentes/modals/modal-rechazo/modal-rechazo.component';
 
 /* Guards */
 import { AuthGuard } from './auth/auth.guard';
@@ -35,6 +36,7 @@ import { ModalListComponent } from './componentes/modals/modal-list/modal-list.c
 import { UsuarioService } from './servicios/usuario.service';
 import { AdminService } from './servicios/admin.service';
 import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-pedidos.component';
+
 
 
 @NgModule({
@@ -51,7 +53,8 @@ import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-p
     PedidosComponent,
     ModalConfirmacionComponent,
     ModalListComponent,
-    AdminPedidosComponent
+    AdminPedidosComponent,
+    ModalRechazoComponent
   ],
   imports: [
     BrowserModule,

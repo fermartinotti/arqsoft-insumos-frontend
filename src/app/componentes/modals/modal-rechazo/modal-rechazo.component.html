@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Rechazar pedido</h4>
+  <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <span>Motivo del rechazo: </span> <br>
+  <textarea class="form-control" style="min-width: 100%" [(ngModel)]="motivo"></textarea>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="rechazarPedido()">Rechazar</button>
+</div>
