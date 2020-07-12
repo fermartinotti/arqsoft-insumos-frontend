@@ -25,7 +25,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   setearPedido(pedidos){
-    this.pedidos = pedidos;
+    this.pedidos = pedidos.reverse();
     // console.log(pedidos)
   }
 
