@@ -10,12 +10,14 @@
             <tr>
                 <th scope="col">Estado</th>
                 <th scope="col">Fecha y hora</th>
+                <th scope="col">Motivo</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let estado of estados">
                 <td>{{estado.type}}</td>
                 <td>{{estado.fecha}}</td>
+                <td>{{estado.type == 'Rechazado' ? estado.motivo : '-'}}</td>
             </tr>
         </tbody>
     </table>
