@@ -26,8 +26,8 @@ export class AdminPedidosComponent implements OnInit {
   }
 
   setearPedidos(pedidos) {
-    this.pedidos = pedidos;
-    console.log(pedidos);
+    this.pedidos = pedidos.reverse();
+    //console.log(pedidos);
   }
 
   setearProveedores(proveedores) {
@@ -40,6 +40,7 @@ export class AdminPedidosComponent implements OnInit {
     modalRechazo.result.then(result=>{
     this.getPedidosRechazados();
     })
+    .catch(() => {});
   }
 
   getPedidosRechazados(){
