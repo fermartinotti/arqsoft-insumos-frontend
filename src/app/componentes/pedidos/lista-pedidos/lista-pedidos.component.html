@@ -18,12 +18,12 @@
           <td>{{pedido.area.nombre}}</td>
           <td>
             <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <i class="fa fa-info-circle hand" aria-hidden="true"></i>
             </div>
           </td>
           <td *ngIf="pedido.estados[0].type == 'Enviado'">
             <div (click)="cancelarPedido(pedido.id)" title="Cancelar pedido">
-              <i class="fa fa-trash" aria-hidden="true"></i>
+              <i class="fa fa-ban hand" aria-hidden="true"></i>
             </div>
           </td>
         </tr>

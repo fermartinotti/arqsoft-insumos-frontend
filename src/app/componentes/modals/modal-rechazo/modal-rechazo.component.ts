@@ -17,7 +17,7 @@ export class ModalRechazoComponent {
 
   constructor(public modal: NgbActiveModal, private adminService: AdminService) { }
 
-  async rechazarPedido(){
+  async rechazarPedidoModal(){
     const rechazarTicketRequest = new RechazarTicketRequest(this.idTicket, this.motivo);
     this.adminService.rechazarPedido(rechazarTicketRequest);
     this.modal.close()

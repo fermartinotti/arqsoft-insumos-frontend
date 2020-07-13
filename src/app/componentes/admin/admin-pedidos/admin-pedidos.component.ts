@@ -18,7 +18,7 @@ export class AdminPedidosComponent implements OnInit {
   solapaPendientes: boolean = false;
   solapaRechazados: boolean = false;
   paginaActual:number = 1; 
-  solapaActual: string = 'Todos los pedidos'
+  solapaActual: string = 'TODOS LOS PEDIDOS'
 
   constructor(private adminService: AdminService, private modalService: NgbModal) { }
 
@@ -49,7 +49,7 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = false;
     this.solapaRechazados = true;
     this.solapaPendientes = false;
-    this.solapaActual = 'Pedidos rechazados';
+    this.solapaActual = 'PEDIDOS RECHAZADOS';
   }
 
   getPedidosPendientes(){
@@ -57,7 +57,7 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = false;
     this.solapaRechazados = false;
     this.solapaPendientes = true;
-    this.solapaActual = 'Pedidos pendientes';
+    this.solapaActual = 'PEDIDOS PENDIENTES';
   }
 
   getAllPedidos(){
@@ -65,11 +65,11 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = true;
     this.solapaRechazados = false;
     this.solapaPendientes = false;
-    this.solapaActual = 'Todos los pedidos'
+    this.solapaActual = 'TODOS LOS PEDIDOS'
   }
 
   historialDeEstados(listaEstados){
     const modalList = this.modalService.open(ModalListComponent);
-    modalList.componentInstance.estados = listaEstados.reverse();
+    modalList.componentInstance.estados = listaEstados;
   }
 }
