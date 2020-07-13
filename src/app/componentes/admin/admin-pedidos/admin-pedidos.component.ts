@@ -18,7 +18,7 @@ export class AdminPedidosComponent implements OnInit {
   solapaPendientes: boolean = false;
   solapaRechazados: boolean = false;
   paginaActual:number = 1; 
-  solapaActual: string = 'TODOS LOS PEDIDOS'
+  solapaActual: string = 'Todos los pedidos'
 
   constructor(private adminService: AdminService, private modalService: NgbModal) { }
 
@@ -31,15 +31,19 @@ export class AdminPedidosComponent implements OnInit {
     //console.log(pedidos);
   }
 
+  obtenerTodosLosPedidos(){
+    this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+  }
+
   setearProveedores(proveedores) {
     this.proveedores = proveedores;
   }
 
-  rechazarPedido(id: number) {
+  async rechazarPedido(id: number) {
     const modalRechazo= this.modalService.open(ModalRechazoComponent);
     modalRechazo.componentInstance.idTicket = id;
-    modalRechazo.result.then(result=>{
-      this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    modalRechazo.result.then(async result=>{
+      await this.obtenerTodosLosPedidos();
     })
     .catch(() => {});
   }
@@ -49,7 +53,7 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = false;
     this.solapaRechazados = true;
     this.solapaPendientes = false;
-    this.solapaActual = 'PEDIDOS RECHAZADOS';
+    this.solapaActual = 'Pedidos rechazados';
   }
 
   getPedidosPendientes(){
@@ -57,7 +61,7 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = false;
     this.solapaRechazados = false;
     this.solapaPendientes = true;
-    this.solapaActual = 'PEDIDOS PENDIENTES';
+    this.solapaActual = 'Pedidos pendientes';
   }
 
   getAllPedidos(){
@@ -65,11 +69,11 @@ export class AdminPedidosComponent implements OnInit {
     this.solapaAll = true;
     this.solapaRechazados = false;
     this.solapaPendientes = false;
-    this.solapaActual = 'TODOS LOS PEDIDOS'
+    this.solapaActual = 'Todos los pedidos'
   }
 
   historialDeEstados(listaEstados){
     const modalList = this.modalService.open(ModalListComponent);
-    modalList.componentInstance.estados = listaEstados;
+    modalList.componentInstance.estados = listaEstados.reverse();
   }
 }
