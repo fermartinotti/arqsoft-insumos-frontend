@@ -1,5 +1,5 @@
 {
     "/insumos": {
-      "target": "http://localhost:8080"
+      "target": "https://insumos-2020-backend.herokuapp.com/"
     }
   }

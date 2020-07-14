@@ -13,7 +13,7 @@ import { CancelarTicketRequest } from '../modelo/cancelarTicketRequest';
 import { Area } from '../modelo/area';
 
 
-export const baseURL = 'http://localhost:4200'
+export const baseURL = 'https://insumos-2020-backend.herokuapp.com/'
 
 @Injectable()
 export class UsuarioService {
