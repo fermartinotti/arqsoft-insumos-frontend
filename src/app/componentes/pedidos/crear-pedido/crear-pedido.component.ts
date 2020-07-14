@@ -82,6 +82,7 @@ export class CrearPedidoComponent implements OnInit {
     });
     this.insumoSeleccionado = '1';
     this.idAreaSeleccionada = 1;
+    this.medicamentoPedido = '';
   
   }
 
