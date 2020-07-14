@@ -11,6 +11,7 @@
                 <th scope="col">Estado</th>
                 <th scope="col">Fecha y hora</th>
                 <th scope="col">Motivo</th>
+                <th scope="col">Proveedor asignado</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
                 <td>{{estado.type}}</td>
                 <td>{{estado.fecha}}</td>
                 <td>{{estado.type == 'Rechazado' ? estado.motivo : '-'}}</td>
+                <td>{{estado.type == 'Aprobado' ? estado.proveedor.nombre : '-'}}</td>
             </tr>
         </tbody>
     </table>

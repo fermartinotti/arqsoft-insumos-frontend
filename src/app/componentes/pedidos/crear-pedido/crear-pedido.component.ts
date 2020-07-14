@@ -88,7 +88,7 @@ export class CrearPedidoComponent implements OnInit {
   }
 
   actualizarPedidos(){
-    this.usuarioService.getPedidos().then(resultado =>this.mensaje.emit(resultado.reverse()));
+    this.usuarioService.getPedidos().then(resultado =>this.mensaje.emit(resultado));
   }
   
 }

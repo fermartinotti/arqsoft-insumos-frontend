@@ -30,7 +30,7 @@ export class AdminPedidosComponent implements OnInit {
   }
 
   setearPedidos(pedidos) {
-    this.pedidos = pedidos.reverse();
+    this.pedidos = pedidos;
     //console.log(pedidos);
   }
 
@@ -77,7 +77,8 @@ export class AdminPedidosComponent implements OnInit {
 
   historialDeEstados(listaEstados){
     const modalList = this.modalService.open(ModalListComponent);
-    modalList.componentInstance.estados = listaEstados.reverse();
+    console.log(listaEstados);
+    modalList.componentInstance.estados = listaEstados;
   }
 
   aprobarPedido(pedido){
