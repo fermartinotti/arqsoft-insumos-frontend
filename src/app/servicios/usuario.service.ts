@@ -46,7 +46,7 @@ export class UsuarioService {
     }
 
     async getAreas():Promise<Array<Area>>{
-        return await this.httpClient.get<Array<Area>>(baseURL + '/insumos/ticket/areas'{
+        return await this.httpClient.get<Array<Area>>(baseURL + '/insumos/ticket/areas', {
             headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`)
           }).pipe(map(respuesta => respuesta.map(area => Area.crearDesdeJson(area)))).toPromise();  
     }
