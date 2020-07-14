@@ -2,7 +2,7 @@
   <div class="card-body">
     <h6 class="text-center">
       Pedidos realizados
-    </h6>
+    </h6><br>
     <table class="table table-sm table-hover">
       <thead>
         <tr>
@@ -29,6 +29,6 @@
         </tr>
       </tbody>
     </table>
-    <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+    <pagination-controls class="paginacion-pedidos" (pageChange)="paginaActual = $event"></pagination-controls>
   </div>
 </div>

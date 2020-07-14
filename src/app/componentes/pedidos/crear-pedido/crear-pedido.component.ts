@@ -19,8 +19,8 @@ import { ModalCloseComponent} from '../../modals/modal-close/modal-close.layout'
 export class CrearPedidoComponent implements OnInit {
   formularioCrearPedido: FormGroup;
   submitted = false;
-  insumoSeleccionado='1';
-  idAreaSeleccionada= 1;
+  insumoSeleccionado = '1';
+  idAreaSeleccionada = 1;
 
   insumos:string[] = [ 'Mascara', 'Barbijo', 'Respirador', 'Medicamento', 'Guante' ];
   areas:Area[];
@@ -79,6 +79,9 @@ export class CrearPedidoComponent implements OnInit {
       area:['1', Validators.required],
       medicamento:new FormControl('')
     });
+    this.insumoSeleccionado = '1';
+    this.idAreaSeleccionada = 1;
+  
   }
 
   crearModal(titulo: string, descripcion: string) {
@@ -88,7 +91,7 @@ export class CrearPedidoComponent implements OnInit {
   }
 
   actualizarPedidos(){
-    this.usuarioService.getPedidos().then(resultado =>this.mensaje.emit(resultado.reverse()));
+    this.usuarioService.getPedidos().then(resultado =>this.mensaje.emit(resultado));
   }
   
 }

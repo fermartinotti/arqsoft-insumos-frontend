@@ -6,7 +6,7 @@ Frontend construido con [Angular CLI](https://github.com/angular/angular-cli) ve
 # Instalacion
 ## Descargar
 ```
-git clone https://github.com/yoLUkAsss/arq-soft-2020-angular.git
+git clone https://github.com/fermartinotti/arqsoft-insumos-frontend.git
 cd arq-soft-2020-angular
 ```
 

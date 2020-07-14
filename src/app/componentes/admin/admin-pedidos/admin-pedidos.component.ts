@@ -5,6 +5,8 @@ import { Pedido } from 'src/app/modelo/pedido';
 import { Proveedor } from 'src/app/modelo/proveedor';
 import { ModalRechazoComponent } from '../../modals/modal-rechazo/modal-rechazo.component';
 import { ModalListComponent } from '../../modals/modal-list/modal-list.component';
+import { ModalAprobarPedidoComponent } from '../../modals/modal-aprobar-pedido/modal-aprobar-pedido.component';
+import { Insumo } from 'src/app/modelo/insumo';
 
 @Component({
   selector: 'app-admin-pedidos',
@@ -13,6 +15,7 @@ import { ModalListComponent } from '../../modals/modal-list/modal-list.component
 })
 export class AdminPedidosComponent implements OnInit {
   pedidos: Pedido[];
+  pedidosPendientes: Pedido[];
   proveedores: Proveedor[];
   solapaAll: boolean = true;
   solapaPendientes: boolean = false;
@@ -24,28 +27,36 @@ export class AdminPedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
+    this.getProveedores();
   }
 
   setearPedidos(pedidos) {
-    this.pedidos = pedidos.reverse();
+    this.pedidos = pedidos;
     //console.log(pedidos);
   }
 
   obtenerTodosLosPedidos(){
-    this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.adminService.getAllPedidos().then(result => this.pedidos = result);
   }
 
-  setearProveedores(proveedores) {
-    this.proveedores = proveedores;
+  obtenerTodosLosPedidosPendientes(){
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
   }
+
+ getProveedores(){
+   this.adminService.getAllProveedores().then(result => this.proveedores = result);
+ }
 
   async rechazarPedido(id: number) {
     const modalRechazo= this.modalService.open(ModalRechazoComponent);
     modalRechazo.componentInstance.idTicket = id;
-    modalRechazo.result.then(async result=>{
-      await this.obtenerTodosLosPedidos();
-    })
-    .catch(() => {});
+ 
+      modalRechazo.result.then(async result=>{
+        await this.obtenerTodosLosPedidos();
+        await this.obtenerTodosLosPedidosPendientes();
+     })
+     .catch(() => {});
   }
 
   getPedidosRechazados(){
@@ -57,7 +68,7 @@ export class AdminPedidosComponent implements OnInit {
   }
 
   getPedidosPendientes(){
-    this.adminService.getPedidosPendientes().then(result => this.setearPedidos(result));
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
     this.solapaAll = false;
     this.solapaRechazados = false;
     this.solapaPendientes = true;
@@ -74,6 +85,38 @@ export class AdminPedidosComponent implements OnInit {
 
   historialDeEstados(listaEstados){
     const modalList = this.modalService.open(ModalListComponent);
-    modalList.componentInstance.estados = listaEstados.reverse();
+    console.log(listaEstados);
+    modalList.componentInstance.estados = listaEstados;
+  }
+
+  aprobarPedido(pedido){
+    const modalAprobacion= this.modalService.open(ModalAprobarPedidoComponent);
+    modalAprobacion.componentInstance.pedido = pedido;
+    modalAprobacion.componentInstance.proveedores = this.filtrarProveedores(this.proveedores, pedido);
+    modalAprobacion.result.then(async result=>{
+      await this.obtenerTodosLosPedidos();
+      await this.obtenerTodosLosPedidosPendientes();
+    })
+    .catch(() => {});
+  }
+
+  filtrarProveedores(proveedores:Array<Proveedor>, pedido: Pedido): Array<Proveedor>{
+    let proveedoresFiltrados = new Array<Proveedor>();
+    for(let proveedor of proveedores){
+      if(this.trabajaInsumo(proveedor.insumos, pedido)){
+        proveedoresFiltrados.push(proveedor);
+      }
+    }
+    return proveedoresFiltrados;
+  }
+
+  trabajaInsumo(insumos: Array<Insumo>, pedido: Pedido): boolean{
+    for(let insumo of insumos){
+      if(insumo.type == pedido.insumo.type){
+        return true;
+      }
+    }
+    return false;
   }
 }
+

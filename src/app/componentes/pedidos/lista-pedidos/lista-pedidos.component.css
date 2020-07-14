@@ -13,3 +13,7 @@
   .hand:hover{
     cursor:pointer;
  }
+
+ .paginacion-pedidos{
+  text-align: center;
+}

@@ -25,7 +25,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   setearPedido(pedidos){
-    this.pedidos = pedidos.reverse();
+    this.pedidos = pedidos;
     // console.log(pedidos)
   }
 
@@ -53,6 +53,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   historialDeEstados(listaEstados){
+    console.log(listaEstados);
     const modalList = this.modalService.open(ModalListComponent);
     modalList.componentInstance.estados = listaEstados;
   }

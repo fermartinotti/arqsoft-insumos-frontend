@@ -5,9 +5,9 @@
   </button>
 </div>
 <div class="modal-body">
-  <span>Motivo del rechazo: </span> <br>
+  <span>Motivo del rechazo: </span> <br><br>
   <textarea class="form-control" style="min-width: 100%" [(ngModel)]="motivo"></textarea>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="rechazarPedidoModal()">Rechazar</button>
+  <button type="button" class="btn btn-danger" (click)="rechazarPedidoModal()" [disabled] = "motivo == '' " >Rechazar</button>
 </div>
