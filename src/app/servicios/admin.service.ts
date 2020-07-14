@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { Pedido } from '../modelo/pedido';
 import { RechazarTicketRequest } from '../modelo/rechazarTicketRequest';
+import { AprobarTicketRequest } from '../modelo/aprobarTicketRequest';
 import { Proveedor } from '../modelo/proveedor';
 
 export const baseURL = 'http://localhost:4200'
@@ -32,6 +33,12 @@ export class AdminService {
 
     async rechazarPedido(ticket:RechazarTicketRequest): Promise<any> {
         return await this.httpClient.post(baseURL + '/insumos/ticket/rechazarTicket', ticket, {
+            headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+          }).toPromise();  
+    }
+
+    async aprobarPedido(ticket:AprobarTicketRequest): Promise<any> {
+        return await this.httpClient.post(baseURL + '/insumos/ticket/aprobar', ticket, {
             headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`)
           }).toPromise();  
     }

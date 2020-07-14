@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Rechazar pedido</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span>Seleccioná un proveedor: </span> <br>
+    <div class="form-group">
+        <select class="form-control" [(ngModel)]="proveedorSeleccionado.id" >
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option [value]="proveedor.id" *ngFor="let proveedor of proveedores">{{proveedor.nombre}}</option>
+        </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="aprobarPedidoModal()">Asignar</button>
+  </div>

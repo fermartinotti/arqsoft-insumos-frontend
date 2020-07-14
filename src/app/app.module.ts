@@ -36,6 +36,7 @@ import { ModalListComponent } from './componentes/modals/modal-list/modal-list.c
 import { UsuarioService } from './servicios/usuario.service';
 import { AdminService } from './servicios/admin.service';
 import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-pedidos.component';
+import { ModalAprobarPedidoComponent } from './componentes/modals/modal-aprobar-pedido/modal-aprobar-pedido.component';
 
 
 
@@ -54,7 +55,8 @@ import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-p
     ModalConfirmacionComponent,
     ModalListComponent,
     AdminPedidosComponent,
-    ModalRechazoComponent
+    ModalRechazoComponent,
+    ModalAprobarPedidoComponent
   ],
   imports: [
     BrowserModule,

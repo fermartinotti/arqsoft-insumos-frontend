@@ -5,6 +5,8 @@ import { Pedido } from 'src/app/modelo/pedido';
 import { Proveedor } from 'src/app/modelo/proveedor';
 import { ModalRechazoComponent } from '../../modals/modal-rechazo/modal-rechazo.component';
 import { ModalListComponent } from '../../modals/modal-list/modal-list.component';
+import { ModalAprobarPedidoComponent } from '../../modals/modal-aprobar-pedido/modal-aprobar-pedido.component';
+import { Insumo } from 'src/app/modelo/insumo';
 
 @Component({
   selector: 'app-admin-pedidos',
@@ -24,6 +26,7 @@ export class AdminPedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.getProveedores();
   }
 
   setearPedidos(pedidos) {
@@ -35,9 +38,9 @@ export class AdminPedidosComponent implements OnInit {
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
   }
 
-  setearProveedores(proveedores) {
-    this.proveedores = proveedores;
-  }
+ getProveedores(){
+   this.adminService.getAllProveedores().then(result => this.proveedores = result);
+ }
 
   async rechazarPedido(id: number) {
     const modalRechazo= this.modalService.open(ModalRechazoComponent);
@@ -76,4 +79,37 @@ export class AdminPedidosComponent implements OnInit {
     const modalList = this.modalService.open(ModalListComponent);
     modalList.componentInstance.estados = listaEstados.reverse();
   }
+
+  aprobarPedido(pedido){
+    const modalAprobacion= this.modalService.open(ModalAprobarPedidoComponent);
+    modalAprobacion.componentInstance.pedido = pedido;
+    modalAprobacion.componentInstance.proveedores = this.filtrarProveedores(this.proveedores, pedido);
+    modalAprobacion.result.then(async result=>{
+      await this.obtenerTodosLosPedidos();
+    })
+    .catch(() => {});
+  }
+
+  filtrarProveedores(proveedores:Array<Proveedor>, pedido: Pedido): Array<Proveedor>{
+    let proveedoresFiltrados = new Array<Proveedor>();
+    //console.log(proveedores);
+    for(let proveedor of proveedores){
+      if(this.trabajaInsumo(proveedor.insumos, pedido)){
+        proveedoresFiltrados.push(proveedor);
+      }
+    }
+    //console.log(proveedoresFiltrados);
+    return proveedoresFiltrados;
+  }
+
+  trabajaInsumo(insumos: Array<Insumo>, pedido: Pedido): boolean{
+    for(let insumo of insumos){
+      //console.log(insumos.length)
+      if(insumo.type == pedido.insumo.type){
+        return true;
+      }
+    }
+    return false;
+  }
 }
+

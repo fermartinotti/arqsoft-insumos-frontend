@@ -53,6 +53,11 @@
                 <i class="fa fa-ban hand" aria-hidden="true"></i>
               </div>
             </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'" >
+              <div (click)="aprobarPedido(pedido)" title="Aprobar pedido">
+                <i class="fa fa-check hand" aria-hidden="true"></i>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
