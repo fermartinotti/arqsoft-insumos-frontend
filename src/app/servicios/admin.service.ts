@@ -5,7 +5,7 @@ import { Pedido } from '../modelo/pedido';
 import { RechazarTicketRequest } from '../modelo/rechazarTicketRequest';
 import { Proveedor } from '../modelo/proveedor';
 
-export const baseURL = 'https://insumos-2020-backend.herokuapp.com/'
+export const baseURL = 'https://insumos-2020-backend.herokuapp.com'
 
 @Injectable()
 export class AdminService {
