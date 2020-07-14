@@ -21,6 +21,7 @@ export class CrearPedidoComponent implements OnInit {
   submitted = false;
   insumoSeleccionado = '1';
   idAreaSeleccionada = 1;
+  medicamentoPedido: string = '';
 
   insumos:string[] = [ 'Mascara', 'Barbijo', 'Respirador', 'Medicamento', 'Guante' ];
   areas:Area[];
