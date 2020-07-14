@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/yoLUkAsss/arq-soft-2020-angular.svg?branch=master)](https://travis-ci.org/yoLUkAsss/arq-soft-2020-angular)
+[![Build Status](https://travis-ci.org/fermartinotti/arqsoft-insumos-frontend.svg?branch=master)](https://travis-ci.org/fermartinotti/arqsoft-insumos-frontend)
 
 # Frontend - Insumos - Arquitectura de Software 1 2020
 Frontend construido con [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
