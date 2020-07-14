@@ -53,7 +53,7 @@ export class AdminPedidosComponent implements OnInit {
     modalRechazo.componentInstance.idTicket = id;
  
       modalRechazo.result.then(async result=>{
-        await this.obtenerTodosLosPedidosPendientes();
+        await this.obtenerTodosLosPedidos();
         await this.obtenerTodosLosPedidosPendientes();
      })
      .catch(() => {});
