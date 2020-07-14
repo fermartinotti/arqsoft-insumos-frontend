@@ -3,7 +3,7 @@
         <form [formGroup]="formularioCrearPedido" (ngSubmit)="crearPedido()">
             <div class="form-group">
                 <label>Seleccioná el insumo que necesitas</label>
-                <select name="insumo" class="form-control" [(ngModel)]="insumoSeleccionado" formControlName="insumo" [ngClass]="{ 'is-invalid': submitted && f.insumo.errors }">
+                <select name="insumo" class="form-control" [(ngModel)]="insumoSeleccionado" formControlName="insumo">
                     <option [value]="1" hidden>Selecciona una opción</option>
                     <option [value]="insumo" *ngFor="let insumo of insumos">{{insumo}}</option>
                 </select>
@@ -11,18 +11,18 @@
 
             <div class="form-group" *ngIf=" insumoSeleccionado == 'Medicamento' ">
                 <label>¿Qué medicamento necesitas?</label>
-                <input name="medicamento" formControlName="medicamento" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.medicamento.errors }">
+                <input name="medicamento" formControlName="medicamento" class="form-control" [(ngModel)]="medicamentoPedido">
             </div>
 
             <div class="form-group">
                 <label>Seleccioná el área a la cual es destinada</label>
-                <select name="area" class="form-control" [(ngModel)]="idAreaSeleccionada" formControlName="area" [ngClass]="{ 'is-invalid': submitted && f.area.errors }">
+                <select name="area" class="form-control" [(ngModel)]="idAreaSeleccionada" formControlName="area">
                     <option [value]="1" hidden>Selecciona una opción</option>
                     <option [value]="area.id" *ngFor="let area of areas">{{area.nombre}}</option>
                 </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success" [disabled]="idAreaSeleccionada == 1 || insumoSeleccionado == '1'" >Hacer pedido</button>
+                <button type="submit" class="btn btn-success" [disabled]="idAreaSeleccionada == 1 || insumoSeleccionado == '1' || ((insumoSeleccionado == 'Medicamento') && medicamentoPedido == '')" >Hacer pedido</button>
             </div>
            
         </form>
