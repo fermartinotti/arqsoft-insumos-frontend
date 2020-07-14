@@ -2,7 +2,7 @@
   <div class="card-body">
     <h6 class="text-center">
       Pedidos realizados
-    </h6>
+    </h6><br>
     <table class="table table-sm table-hover">
       <thead>
         <tr>
@@ -18,17 +18,17 @@
           <td>{{pedido.area.nombre}}</td>
           <td>
             <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <i class="fa fa-info-circle hand" aria-hidden="true"></i>
             </div>
           </td>
-          <td *ngIf="pedido.estados[0].type != 'Cancelado'">
+          <td *ngIf="pedido.estados[0].type == 'Enviado'">
             <div (click)="cancelarPedido(pedido.id)" title="Cancelar pedido">
-              <i class="fa fa-trash" aria-hidden="true"></i>
+              <i class="fa fa-ban hand" aria-hidden="true"></i>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+    <pagination-controls class="paginacion-pedidos" (pageChange)="paginaActual = $event"></pagination-controls>
   </div>
 </div>

@@ -53,6 +53,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   historialDeEstados(listaEstados){
+    console.log(listaEstados);
     const modalList = this.modalService.open(ModalListComponent);
     modalList.componentInstance.estados = listaEstados;
   }

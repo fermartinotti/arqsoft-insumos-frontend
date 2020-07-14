@@ -22,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* Modals */
 import { ModalCloseComponent } from './componentes/modals/modal-close/modal-close.layout';
+import { ModalRechazoComponent } from './componentes/modals/modal-rechazo/modal-rechazo.component';
 
 /* Guards */
 import { AuthGuard } from './auth/auth.guard';
@@ -33,6 +34,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ModalListComponent } from './componentes/modals/modal-list/modal-list.component';
 
 import { UsuarioService } from './servicios/usuario.service';
+import { AdminService } from './servicios/admin.service';
+import { AdminPedidosComponent } from './componentes/admin/admin-pedidos/admin-pedidos.component';
+import { ModalAprobarPedidoComponent } from './componentes/modals/modal-aprobar-pedido/modal-aprobar-pedido.component';
+
 
 
 @NgModule({
@@ -48,7 +53,10 @@ import { UsuarioService } from './servicios/usuario.service';
     ListaPedidosComponent,
     PedidosComponent,
     ModalConfirmacionComponent,
-    ModalListComponent
+    ModalListComponent,
+    AdminPedidosComponent,
+    ModalRechazoComponent,
+    ModalAprobarPedidoComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,7 @@ import { UsuarioService } from './servicios/usuario.service';
   exports: [
     HttpClientModule
   ],
-  providers: [UsuarioService, AuthGuard, RoleGuard],
+  providers: [UsuarioService, AdminService, AuthGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

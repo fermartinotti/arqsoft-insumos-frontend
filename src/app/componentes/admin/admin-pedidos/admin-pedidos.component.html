@@ -1,0 +1,88 @@
+<div class="d-flex">
+  <div class="sidebar-container bg-sidebar col-2">
+    <div class="menu mt-5">
+      <a class="d-block p-2 mt-1">
+        <span class="sidebar-pedidos" (click)="getAllPedidos()">
+          Todos los pedidos
+        </span>
+      </a>
+      <hr>
+      <a class="d-block p-2 mt-1">
+      <span class="sidebar-pedidos" (click)="getPedidosPendientes()">
+        Pedidos pendientes
+      </span>
+    </a>
+      <hr>
+      <a class="d-block p-2 mt-1">
+      <span class="sidebar-pedidos" (click)="getPedidosRechazados()">
+        Pedidos rechazados
+      </span>
+    </a>
+    </div>
+  </div>
+<div class="card mt-5 col-md-9">
+    <div class="card-body">
+      <h6 class="text-center">
+        {{solapaActual}} 
+      </h6>
+      <br>
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col" *ngIf="solapaAll">Estado</th>
+            <th scope="col" *ngIf="solapaRechazados">Motivo</th>
+            <th scope="col">Área destinada</th>
+            <th scope="col">Usuario</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="solapaAll || solapaRechazados">
+          <tr *ngFor="let pedido of pedidos | paginate: {itemsPerPage:10, currentPage: paginaActual}">
+            <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
+            <td *ngIf="solapaAll">{{pedido.estados[pedido.estados.length -1].type}}</td>
+            <td *ngIf="solapaRechazados">{{pedido.estados[pedido.estados.length -1].motivo}}</td>
+            <td>{{pedido.area.nombre}}</td>
+            <td>{{pedido.email}}</td>
+            <td>
+              <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
+                <i class="fa fa-info-circle hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'">
+              <div (click)="rechazarPedido(pedido.id)" title="Cancelar pedido">
+                <i class="fa fa-ban hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'" >
+              <div (click)="aprobarPedido(pedido)" title="Aprobar pedido">
+                <i class="fa fa-check hand" aria-hidden="true"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="solapaPendientes">
+          <tr *ngFor="let pedido of pedidosPendientes | paginate: {itemsPerPage:10, currentPage: paginaActual}">
+            <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
+            <td>{{pedido.area.nombre}}</td>
+            <td>{{pedido.email}}</td>
+            <td>
+              <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
+                <i class="fa fa-info-circle hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'">
+              <div (click)="rechazarPedido(pedido.id)" title="Cancelar pedido">
+                <i class="fa fa-ban hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'" >
+              <div (click)="aprobarPedido(pedido)" title="Aprobar pedido">
+                <i class="fa fa-check hand" aria-hidden="true"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls class="paginacion-pedidos-admin"(pageChange)="paginaActual = $event" ></pagination-controls>
+    </div>
+  </div>

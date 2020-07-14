@@ -27,8 +27,12 @@
       </ng-template>
       <div class="collapse navbar-collapse" *ngIf="esUsuario()">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pedido">Hacer pedido
-          </a>
+          <a class="nav-link" routerLink="/pedido">Hacer pedido</a>
+        </li>
+      </div>
+      <div class="collapse navbar-collapse" *ngIf="esAdmin()">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/adminPedidos">Administrar pedidos</a>
         </li>
       </div>
  

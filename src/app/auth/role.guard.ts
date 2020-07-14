@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    if (!this.authService.estaLogueado()) {
+    if (!this.authService.estaLogueado() || ! this.authService.esAdminLogueado) {
       this.router.navigate(['/inicio']);
       return false;
     }
