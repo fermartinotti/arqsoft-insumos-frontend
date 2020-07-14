@@ -15,6 +15,7 @@ import { Insumo } from 'src/app/modelo/insumo';
 })
 export class AdminPedidosComponent implements OnInit {
   pedidos: Pedido[];
+  pedidosPendientes: Pedido[];
   proveedores: Proveedor[];
   solapaAll: boolean = true;
   solapaPendientes: boolean = false;
@@ -26,6 +27,7 @@ export class AdminPedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
     this.getProveedores();
   }
 
@@ -35,7 +37,11 @@ export class AdminPedidosComponent implements OnInit {
   }
 
   obtenerTodosLosPedidos(){
-    this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
+    this.adminService.getAllPedidos().then(result => this.pedidos = result);
+  }
+
+  obtenerTodosLosPedidosPendientes(){
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
   }
 
  getProveedores(){
@@ -45,10 +51,12 @@ export class AdminPedidosComponent implements OnInit {
   async rechazarPedido(id: number) {
     const modalRechazo= this.modalService.open(ModalRechazoComponent);
     modalRechazo.componentInstance.idTicket = id;
-    modalRechazo.result.then(async result=>{
-      await this.obtenerTodosLosPedidos();
-    })
-    .catch(() => {});
+ 
+      modalRechazo.result.then(async result=>{
+        await this.obtenerTodosLosPedidosPendientes();
+        await this.obtenerTodosLosPedidosPendientes();
+     })
+     .catch(() => {});
   }
 
   getPedidosRechazados(){
@@ -60,7 +68,7 @@ export class AdminPedidosComponent implements OnInit {
   }
 
   getPedidosPendientes(){
-    this.adminService.getPedidosPendientes().then(result => this.setearPedidos(result));
+    this.adminService.getPedidosPendientes().then(result => this.pedidosPendientes = result);
     this.solapaAll = false;
     this.solapaRechazados = false;
     this.solapaPendientes = true;
@@ -87,25 +95,23 @@ export class AdminPedidosComponent implements OnInit {
     modalAprobacion.componentInstance.proveedores = this.filtrarProveedores(this.proveedores, pedido);
     modalAprobacion.result.then(async result=>{
       await this.obtenerTodosLosPedidos();
+      await this.obtenerTodosLosPedidosPendientes();
     })
     .catch(() => {});
   }
 
   filtrarProveedores(proveedores:Array<Proveedor>, pedido: Pedido): Array<Proveedor>{
     let proveedoresFiltrados = new Array<Proveedor>();
-    //console.log(proveedores);
     for(let proveedor of proveedores){
       if(this.trabajaInsumo(proveedor.insumos, pedido)){
         proveedoresFiltrados.push(proveedor);
       }
     }
-    //console.log(proveedoresFiltrados);
     return proveedoresFiltrados;
   }
 
   trabajaInsumo(insumos: Array<Insumo>, pedido: Pedido): boolean{
     for(let insumo of insumos){
-      //console.log(insumos.length)
       if(insumo.type == pedido.insumo.type){
         return true;
       }

@@ -36,11 +36,33 @@
             <th scope="col">Usuario</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="solapaAll || solapaRechazados">
           <tr *ngFor="let pedido of pedidos | paginate: {itemsPerPage:10, currentPage: paginaActual}">
             <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
             <td *ngIf="solapaAll">{{pedido.estados[pedido.estados.length -1].type}}</td>
             <td *ngIf="solapaRechazados">{{pedido.estados[pedido.estados.length -1].motivo}}</td>
+            <td>{{pedido.area.nombre}}</td>
+            <td>{{pedido.email}}</td>
+            <td>
+              <div (click)="historialDeEstados(pedido.estados)" title="Historial de estados">
+                <i class="fa fa-info-circle hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'">
+              <div (click)="rechazarPedido(pedido.id)" title="Cancelar pedido">
+                <i class="fa fa-ban hand" aria-hidden="true"></i>
+              </div>
+            </td>
+            <td *ngIf="pedido.estados[pedido.estados.length -1].type == 'Enviado'" >
+              <div (click)="aprobarPedido(pedido)" title="Aprobar pedido">
+                <i class="fa fa-check hand" aria-hidden="true"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="solapaPendientes">
+          <tr *ngFor="let pedido of pedidosPendientes | paginate: {itemsPerPage:10, currentPage: paginaActual}">
+            <td>{{pedido.insumo.type}} {{pedido.insumo.nombre}}</td>
             <td>{{pedido.area.nombre}}</td>
             <td>{{pedido.email}}</td>
             <td>
