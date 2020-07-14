@@ -2,19 +2,19 @@
   <div class="sidebar-container bg-sidebar col-2">
     <div class="menu mt-5">
       <a class="d-block p-2 mt-1">
-        <span class="sidebar-pedidos" (click)="getAllPedidos()">
+        <span class="sidebar-pedidos" (click)="getAllPedidos()" [ngClass]="{ 'sidebar-pedidos-selected': solapaAll }">
           Todos los pedidos
         </span>
       </a>
       <hr>
       <a class="d-block p-2 mt-1">
-      <span class="sidebar-pedidos" (click)="getPedidosPendientes()">
+      <span class="sidebar-pedidos" (click)="getPedidosPendientes()" [ngClass]="{ 'sidebar-pedidos-selected': solapaPendientes }">
         Pedidos pendientes
       </span>
     </a>
       <hr>
       <a class="d-block p-2 mt-1">
-      <span class="sidebar-pedidos" (click)="getPedidosRechazados()">
+      <span class="sidebar-pedidos" (click)="getPedidosRechazados()" [ngClass]="{ 'sidebar-pedidos-selected': solapaRechazados }">
         Pedidos rechazados
       </span>
     </a>

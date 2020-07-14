@@ -4,14 +4,10 @@
 
 .sidebar-pedidos:hover{
    cursor:pointer;
-   color: white;
-   background: #006ED2;
 }
 
-.sidebar-pedidos::selection{
-    cursor:pointer;
-    color: white;
-    background: #006ED2;
+.sidebar-pedidos-selected{
+    font-weight: bold;
  }
 
  .paginacion-pedidos-admin{
