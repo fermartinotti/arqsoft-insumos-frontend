@@ -14,5 +14,5 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="aprobarPedidoModal()">Asignar</button>
+    <button type="button" class="btn btn-success" (click)="aprobarPedidoModal()" [disabled]= "proveedorSeleccionado.id == ''">Asignar</button>
   </div>
