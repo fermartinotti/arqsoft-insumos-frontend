@@ -9,6 +9,7 @@ import { Medicamento } from 'src/app/modelo/medicamento';
 import { Pedido } from 'src/app/modelo/pedido';
 import { Area } from 'src/app/modelo/area';
 import { ModalCloseComponent} from '../../modals/modal-close/modal-close.layout';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-crear-pedido',
@@ -29,7 +30,7 @@ export class CrearPedidoComponent implements OnInit {
   @Output() mensaje = new EventEmitter<Pedido[]>();
 
   constructor(private router: Router, private formBuilder: FormBuilder, private usuarioService: UsuarioService, 
-    private _modalService: NgbModal) { }
+    private _modalService: NgbModal, private logger: NGXLogger) { }
 
   get f() { return this.formularioCrearPedido.controls;}
 
@@ -56,7 +57,10 @@ export class CrearPedidoComponent implements OnInit {
             this.formularioCrearPedido.get('medicamento').value
             );
           const ticket:CrearTicketDTO = new CrearTicketDTO(medicamento, this.idAreaSeleccionada);
-          await this.usuarioService.crearPedido(ticket);
+          await this.usuarioService.crearPedido(ticket).then(r=> 
+            this.logger.info("Se ha creado el pedido de " 
+            + this.formularioCrearPedido.get('insumo').value + ' ' + this.formularioCrearPedido.get('medicamento').value 
+            + " de manera exitosa"));
           this.actualizarPedidos();       
           this.crearModal('Crear pedido', 'El pedido se ha creado de forma satisfactoria');
         }
@@ -64,7 +68,8 @@ export class CrearPedidoComponent implements OnInit {
           this.formularioCrearPedido.removeControl('medicamento')
           const insumo:Insumo = new Insumo(this.formularioCrearPedido.get('insumo').value);
           const ticket:CrearTicketDTO = new CrearTicketDTO(insumo, this.idAreaSeleccionada);       
-          await this.usuarioService.crearPedido(ticket);
+          await this.usuarioService.crearPedido(ticket).then(r=> this.logger.info("Se ha creado el pedido de " 
+          + this.formularioCrearPedido.get('insumo').value + " de manera exitosa"));
           this.actualizarPedidos();          
           this.crearModal('Crear pedido', 'El pedido se ha creado de forma satisfactoria');
         }
@@ -72,7 +77,7 @@ export class CrearPedidoComponent implements OnInit {
       
     }
     catch(error){
-      console.log(error);
+      this.logger.error("El pedido no se ha podido crear debido a: " + error);
       this.crearModal('Crear pedido', 'Falló');
     }
     this.formularioCrearPedido= this.formBuilder.group({

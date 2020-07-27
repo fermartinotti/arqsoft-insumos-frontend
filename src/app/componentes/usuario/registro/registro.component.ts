@@ -6,6 +6,7 @@ import { MustMatch } from '../../validaciones/must-match.validator';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCloseComponent } from '../../modals/modal-close/modal-close.layout';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class RegistroComponent implements OnInit {
   submitted = false;
   
   constructor(private router: Router, private formBuilder: FormBuilder, private usuarioService:UsuarioService, 
-    private modalService: NgbModal) {}
+    private modalService: NgbModal, private logger: NGXLogger) {}
 
   get f() { return this.formularioRegistro.controls; }
 
@@ -37,13 +38,13 @@ export class RegistroComponent implements OnInit {
           this.formularioRegistro.get('password').value
         );
         
-        await this.usuarioService.crearUsuario(usuario);
+        await this.usuarioService.crearUsuario(usuario).then(r => this.logger.info('El usuario ' +  this.formularioRegistro.get('email').value + ' se ha creado satisfactoriamente'));
         this.crearModal('Alta de usuario', 'El usuario se ha dado de alta satistfactoriamente');
         this.router.navigate(['/login']); 
       }
     } catch (error) {
         const errorPantalla:string = error.error.Error;
-        console.log(errorPantalla);
+        this.logger.error("El usuario no se ha podido registrar debido a: " + errorPantalla);
         this.crearModal('Alta de usuario', errorPantalla);
     }
   }

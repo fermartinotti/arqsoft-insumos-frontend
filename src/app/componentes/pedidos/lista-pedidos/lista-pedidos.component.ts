@@ -5,6 +5,7 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCloseComponent } from '../../modals/modal-close/modal-close.layout';
 import { ModalListComponent } from '../../modals/modal-list/modal-list.component';
 import { CancelarTicketRequest } from 'src/app/modelo/cancelarTicketRequest';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ListaPedidosComponent implements OnInit {
   paginaActual:number = 1; 
   modalOptions: NgbModalOptions;
 
-  constructor(private usuarioService:UsuarioService, private modalService: NgbModal) { }
+  constructor(private usuarioService:UsuarioService, private modalService: NgbModal, private logger: NGXLogger) { }
 
   ngOnInit(): void {
     this.usuarioService.getPedidos().then(pedidos => this.setearPedido(pedidos));
@@ -32,18 +33,15 @@ export class ListaPedidosComponent implements OnInit {
   async cancelarPedido(id:number):Promise<any> {
       try{
         const ticket:CancelarTicketRequest = new CancelarTicketRequest(id);
-        await this.usuarioService.cancelarPedido(ticket);
+        await this.usuarioService.cancelarPedido(ticket).then(r=>
+          this.logger.info("El pedido con id " + id.toString() + " ha sido cancelado de forma exitosa"));
         this.usuarioService.getPedidos().then(pedidos => this.setearPedido(pedidos));
         this.crearModal('Cancelación pedido', 'El pedido se ha cancelado satistfactoriamente');     
       }
       catch(error){
-        console.log(error);
+        this.logger.error("El pedido no se pudo cancelar debido a: " + ' ' + error);
         this.crearModal('Cancelación pedido', 'No se pudo cancelar el pedido. Intente nuevamente mas tarde');
       }
-  }
-
-  async cancelarPedidoFuncion(ticket){
-    await this.usuarioService.cancelarPedido(ticket);
   }
 
   crearModal(titulo:string, descripcion:string){

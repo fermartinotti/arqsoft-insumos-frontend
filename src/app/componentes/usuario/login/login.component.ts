@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCloseComponent } from '../../modals/modal-close/modal-close.layout';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, private usuarioService: UsuarioService, 
-    private _modalService: NgbModal) { }
+    private _modalService: NgbModal, private logger: NGXLogger) { }
 
   get f() { return this.formularioLogin.controls; }
 
@@ -31,7 +32,10 @@ export class LoginComponent implements OnInit {
           this.formularioLogin.get('password').value
         );
 
-        await this.usuarioService.login(loginRequest).then(resultado => this.setearRoles(resultado));
+        await this.usuarioService.login(loginRequest).then(resultado => {
+          this.setearRoles(resultado);
+          this.logger.info('El usuario ' +  this.formularioLogin.get('email').value + ' se ha logueado con éxito');   
+        });
 
         if(this.usuarioService.esAdminLogueado()){
           this.router.navigate(['/adminPedidos']);
@@ -42,7 +46,7 @@ export class LoginComponent implements OnInit {
       }
     }
     catch (error) {
-      console.log(error);
+      this.logger.error("El usuario no se ha podido loguear debido a: " + error);
       this.crearModal('LOGIN', 'El usuario y/o contraseña ingresados es/son incorrecto/s');
     }
   }

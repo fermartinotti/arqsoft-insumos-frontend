@@ -32,6 +32,7 @@ import { ModalConfirmacionComponent } from './componentes/modals/modal-confirmac
 /* Externals */
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ModalListComponent } from './componentes/modals/modal-list/modal-list.component';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 import { UsuarioService } from './servicios/usuario.service';
 import { AdminService } from './servicios/admin.service';
@@ -65,7 +66,8 @@ import { ModalAprobarPedidoComponent } from './componentes/modals/modal-aprobar-
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
   exports: [
     HttpClientModule

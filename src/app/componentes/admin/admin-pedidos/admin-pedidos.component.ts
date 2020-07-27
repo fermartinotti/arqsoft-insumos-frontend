@@ -7,6 +7,7 @@ import { ModalRechazoComponent } from '../../modals/modal-rechazo/modal-rechazo.
 import { ModalListComponent } from '../../modals/modal-list/modal-list.component';
 import { ModalAprobarPedidoComponent } from '../../modals/modal-aprobar-pedido/modal-aprobar-pedido.component';
 import { Insumo } from 'src/app/modelo/insumo';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-admin-pedidos',
@@ -23,7 +24,7 @@ export class AdminPedidosComponent implements OnInit {
   paginaActual:number = 1; 
   solapaActual: string = 'Todos los pedidos'
 
-  constructor(private adminService: AdminService, private modalService: NgbModal) { }
+  constructor(private adminService: AdminService, private modalService: NgbModal, private logger: NGXLogger) { }
 
   ngOnInit(): void {
     this.adminService.getAllPedidos().then(result => this.setearPedidos(result));
@@ -55,8 +56,11 @@ export class AdminPedidosComponent implements OnInit {
       modalRechazo.result.then(async result=>{
         await this.obtenerTodosLosPedidos();
         await this.obtenerTodosLosPedidosPendientes();
+        this.logger.info("El pedido con id " + id.toString() + " se ha cancelado de forma exitosa" );
      })
-     .catch(() => {});
+     .catch(error => {
+      this.logger.error("El pedido con id " + id.toString() + " no se ha podido cancelar debido a: " + error);
+     });
   }
 
   getPedidosRechazados(){
@@ -96,8 +100,11 @@ export class AdminPedidosComponent implements OnInit {
     modalAprobacion.result.then(async result=>{
       await this.obtenerTodosLosPedidos();
       await this.obtenerTodosLosPedidosPendientes();
+      this.logger.info("El pedido con id " + pedido.id.toString() + " se ha aprobado de forma satisfactoria");
     })
-    .catch(() => {});
+    .catch(error => {
+      this.logger.error("El pedido con id " + pedido.id.toString() + " no se ha podido aprobar debido a: " + error);
+    });
   }
 
   filtrarProveedores(proveedores:Array<Proveedor>, pedido: Pedido): Array<Proveedor>{

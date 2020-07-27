@@ -20,7 +20,6 @@ export class ModalRechazoComponent {
   async rechazarPedidoModal(){
     const rechazarTicketRequest = new RechazarTicketRequest(this.idTicket, this.motivo);
     await this.adminService.rechazarPedido(rechazarTicketRequest);
-    console.log("Rechazo pedido");
     this.modal.close()
   }
 }
