@@ -58,9 +58,7 @@ export class AdminPedidosComponent implements OnInit {
         await this.obtenerTodosLosPedidosPendientes();
         this.logger.info("El pedido con id " + id.toString() + " se ha cancelado de forma exitosa" );
      })
-     .catch(error => {
-      this.logger.error("El pedido con id " + id.toString() + " no se ha podido cancelar debido a: " + error);
-     });
+     .catch(() => {});
   }
 
   getPedidosRechazados(){
@@ -102,9 +100,7 @@ export class AdminPedidosComponent implements OnInit {
       await this.obtenerTodosLosPedidosPendientes();
       this.logger.info("El pedido con id " + pedido.id.toString() + " se ha aprobado de forma satisfactoria");
     })
-    .catch(error => {
-      this.logger.error("El pedido con id " + pedido.id.toString() + " no se ha podido aprobar debido a: " + error);
-    });
+    .catch(() => {});
   }
 
   filtrarProveedores(proveedores:Array<Proveedor>, pedido: Pedido): Array<Proveedor>{
